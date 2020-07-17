@@ -1,15 +1,13 @@
-*, 
-*::before,
-*::after {
+*, *::before, *::after {
     box-sizing: border-box;
 }
 
 .header {
     font-family: 'Ranchers', cursive;
     font-size: 4rem;
-    padding: 2rem
-    
+    padding: 2rem;
 }
+
 html {
     margin: 5rem 5rem;
 }
@@ -29,7 +27,7 @@ body {
 }
 
 @media screen and (max-width: 768px) {
-    
+
     html, body {
         margin: 1.25rem;
         font-size: 1rem;
