@@ -58,6 +58,15 @@ body {
     display: none;
 }
 
+.correct {
+    background-color: rgba(25, 219, 25, 0.76);
+}
+
+.wrong {
+    background-color: rgba(180, 26, 26, 0.925);
+
+}
+
 @media screen and (max-width: 768px) {
 
     html, body {

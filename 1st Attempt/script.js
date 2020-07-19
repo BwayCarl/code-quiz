@@ -1,80 +1,7 @@
-/*/ Elements
-const start = document.getElementById("start")
-const quiz = document.getElementById("quiz")
-const question = document.getElementById("question")
-const timer = document.getElementById("timer")
-
-const choiceA = document.getElementById("A")
-const choiceB = document.getElementById("B")
-const choiceC = document.getElementById("C")
-const choiceD = document.getElementById("D")
 
 
-//Create questions
-let questions = [
-{   question: "What does HTML stand for?",
-    choiceA: "Hypertext ",
-    choiceB: "Wrong",
-    choiceC: "Wrong",
-    choiceD: "Wrong",
-    correct: "A"
-    },{
-    question: "What does HTML stand for?",
-    choiceA: "Wrong",
-    choiceB: "Wrong",
-    choiceC: "Correct",
-    choiceD: "Wrong",
-    correct: "C"
-    },{
-    question: "What does HTML stand for?",
-    choiceA: "Wrong",
-    choiceB: "Wrong",
-    choiceC: "Wrong",
-    choiceD: "Correct",
-    correct: "D"
-    },{
-    question: "What does HTML stand for?",
-    choiceA: "Wrong",
-    choiceB: "Correct",
-    choiceC: "Wrong",
-    choiceD: "Wrong",
-    correct: "B"
-    },{
+/*
 
-    question: "WHat does HTML stand for?",
-    choiceA: "Wrong",
-    choiceB: "Correct",
-    choiceC: "Wrong",
-    choiceD: "Wrong",
-    correct: "B"
-    }
-];
-
-
-// Rendering the questions
-
-let lastQuestion = questions.length -1;
-let runningQuestion = 0;
-
-function renderQuestion() {
-    let q = questions[runningQuestion];
-        question.innerHTML - "<p>" + q.question + "</p>";
-        choiceA.innerHTML = q.choiceA;
-        choiceB.innerHTML = q.choiceB;
-        choiceC.innerHTML = q.choiceC;
-        choiceD.innerHTML = q.choiceD;
-}
-start.style.display - "none";
-renderQuestion();
-quiz.style.display = "block";
-
-//Next question
-
-renderQuestion(); {
-    runningQuestionIndex++;
-
-    renderQuestion();
-}
 
 // Timer
 
@@ -195,7 +122,28 @@ function resetState () {
 }
 
 function selectAnswer(e) {
+    const selectedButton = e.target
+    const correct = selectedButton.dataset.correct
 
+    setStatusClass(document.body, correct)
+    Array.from(answerBtnEl.children).forEach(button => {
+        setStatusClass(button, button.dataset.correct)
+    })
+}
+
+function setStatusClass(element, correct) {
+    clearStatusClass(element)
+
+    if (correct) {
+        element.classList.add("correct")
+    } else (
+        element.classList.add("wrong")
+    )
+}
+
+function clearStatusClass(element) {
+    element.classList.remove("correct")
+    element.classList.remove("wrong")
 }
 // Quiz Questions
 
@@ -207,75 +155,82 @@ const questions = [
          {text: "Hyperlink Markup Language", correct: false},
          {text: "How To Make Language", correct: false},
          {text: "Hypertext Marking Language", correct: false}
-        ]
-        
-        }]/*,
+        ]},
+
     {   question: "Besides 'var', what other two ways can you declare a variable?",
-        choiceA: "'let' and 'for'",
-        choiceB: "'if' and 'else'",
-        choiceC: "'this' and 'const'",
-        choiceD: "'let' and 'const'",
-        answer: "'let' and 'const'"
-        },
+        answers: [
+        {text: "'let' and 'for'", correct: false},
+        {text: "'if' and 'else'", correct: false},
+        {text: "'this' and 'const'", correct: false},
+        {text: "'let' and 'const'", correct: true},
+        ]},
+
     {   question: "How do you style an HTML file?",
-        choiceA: "jQuery ",
-        choiceB: "Javascript",
-        choiceC: "CSS",
-        choiceD: "MongoDB",
-        answer: "CSS"
-        },    
+        answers: [
+        {text: "jQuery ", correct: false},
+        {text: "Javascript", correct: false},
+        {text: "CSS", correct: true},
+        {text: "MongoDB", correct: false},
+        ]}, 
+
     {   question: "What does CSS stand for?",
-        choiceA: "Comment Styled Sheets",
-        choiceB: "Cascading Style Sheets",
-        choiceC: "Constructing Style Sheets",
-        choiceD: "Case Styling Sheets",
-        answer: "Cascading Style Sheets"
-        }, 
+        answers: [
+        {text: "Comment Styled Sheets", correct: false},
+        {text: "Cascading Style Sheets", correct: true},
+        {text: "Constructing Style Sheets", correct: false},
+        {text: "Case Styling Sheets", correct: false},
+        ]}, 
+
     {   question: "What is the proper syntax for an array object?",
-        choiceA: "var carMakes = (Toyota, BMW, Ford)",
-        choiceB: "var carMakes = ['Toyota', 'BMW', 'Ford']",
-        choiceC: "var carMakes = ['Toyota' 'BMW' 'Ford']",
-        choiceD: "var carMakes = {'Toyota', 'BMW', 'Ford'}",
-        answer: "var carMakes = ['Toyota', 'BMW', 'Ford']"
-        },  
+    answers: [
+        {text: "var carMakes = (Toyota, BMW, Ford)", correct: false},
+        {text: "var carMakes = ['Toyota', 'BMW', 'Ford']", correct: true},
+        {text: "var carMakes = ['Toyota' 'BMW' 'Ford']", correct: false},
+        {text: "var carMakes = {'Toyota', 'BMW', 'Ford'}", correct: false},
+    ]},  
+
     {   question: "What does the concat() Method do?",
-        choiceA: "It is used to join two or more arrays.",
-        choiceB: "It is used to store strings of characters.",
-        choiceC: "It is used style buttons.",
-        choiceD: "It is used to find felines with a criminal records.",
-        answer: "It is used to join two or more arrays."
-        },  
+        answers: [
+        {text: "It is used to join two or more arrays.", correct: true},
+        {text: "It is used to store strings of characters.", correct: false},
+        {text: "It is used style buttons.", correct: false},
+        {text: "It is used to find felines with a criminal records.", correct: false},
+        ]},  
+
     {   question: "What character is used to define/access jQuery?",
-        choiceA: "#",
-        choiceB: ".",
-        choiceC: "$",
-        choiceD: "&&",
-        answer: "$"
-        },   
+        answers: [
+        {text: "#", correct: false},
+        {text: ".", correct: false},
+        {text: "$", correct: true},
+        {text: "&&", correct: false},
+        ]},   
+
     {   question: "What is Bootstrap?",
-        choiceA: "It is a library of functions for use with JavaScript.",
-        choiceB: "It is a CSS Framework for developing responsive and mobile-first websites.",
-        choiceC: "It is a jQuery Framework that is a lightweight, 'write less, do more', JavaScript library.",
-        choiceD: "A tool by which you pick yourself up, usually in pairs.",
-        answer: "It is a CSS Framework for developing responsive and mobile-first websites."
-        },
+        answers: [
+        {text: "It is a library of functions for use with JavaScript.", correct: false},
+        {text: "It is a CSS Framework for developing responsive and mobile-first websites.", correct: true},
+        {text: "It is a jQuery Framework that is a lightweight, 'write less, do more', JavaScript library.", correct: false},
+        {text: "A tool by which you pick yourself up, usually in pairs.", correct: false},
+        ]},
+
     {   question: "What does a 'Responsive Web Design' mean?",
-        choiceA: "Making sure your website is quick to access links and articles.",
-        choiceB: "Creating voice commands to access parts of the webpage instad of using a mouse.",
-        choiceC: "Adding animation to images and buttons.",
-        choiceD: "Making a website look good on all devices (desktops, tablets, and phones).",
-        answer: "Making a website look good on all devices (desktops, tablets, and phones)."
-        },
+        answers: [
+        {text: "Making sure your website is quick to access links and articles.", correct: false},
+        {text: "Creating voice commands to access parts of the webpage instad of using a mouse.", correct: false},
+        {text: "Adding animation to images and buttons.", correct: false},
+        {text: "Making a website look good on all devices (desktops, tablets, and phones).", correct: true},
+        ]},
+
     {   question: "What is the proper syntax for a media query?",
-        choiceA: "'?media' in the HTML file. ",
-        choiceB: "'@media' in the CSS file.",
-        choiceC: "'@media' in the JavaScript file.",
-        choiceD: "'@mediaScreen' in the CSS file.",
-        answer: "'@media' in the CSS file."
-        }
+        answers: [
+        {text: "'?media' in the HTML file. ", correct: false},
+        {text: "'@media' in the CSS file.", correct: true},
+        {text: "'@media' in the JavaScript file.", correct: false},
+        {text: "'@mediaScreen' in the CSS file.", correct: false},
+        ]}
 ]
 // Countdown Timer
-
+/*
 document.getElementById('timer').innerHTML =
   002 + ":" + 00;
 startTimer();
