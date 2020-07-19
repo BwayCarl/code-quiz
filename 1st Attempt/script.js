@@ -29,17 +29,6 @@ function checkAnswer(answer) {
     }
 }
 
-//Start Quiz
-
-start.addEventListener("click", startQuiz);
-
-    function startQuiz(){
-        
-        counterRender();
-        timer = setInterval(counterRender, 1000);
-        questionRender;
-        
-    }
 
 
 // Countown Timer
@@ -65,22 +54,23 @@ countdownEl.innerHTML = `${minutes}: ${seconds}`;
 
 
 // Start Page Variables
-const startpageContainerEl = document.getElementById("startpage")
-const startBtn = document.getElementById("start-button")
-const quizContainerEl = document.getElementById("quiz")
-const timescoreContainerEl = document.getElementById("timescore")
+const startpageContainerEl = document.getElementById("startpage");
+const startBtn = document.getElementById("start-button");
+const quizContainerEl = document.getElementById("quiz");
+const timescoreContainerEl = document.getElementById("timescore");
+const timer = document.getElementById("timer");
+
 
 let shuffledQuestions, currentQuestionIndex
 
-const questionEl = document.getElementById("question")
-const answerBtnEl = document.getElementById("choices")
+const questionEl = document.getElementById("question");
+const answerBtnEl = document.getElementById("choices");
 
 
 // Start Quiz
 startBtn.addEventListener("click", startQuiz);
 
 function startQuiz() {
-    console.log("Started")
     startBtn.classList.add("hide")
     shuffledQuestions = questions.sort(() => Math.random() - .5) //Shuffles questions each time the quiz is taken.
     currentQuestionIndex = 0;
@@ -95,9 +85,9 @@ function setNextQuestion() {
     resetState()
     showQuestion(shuffledQuestions[currentQuestionIndex])
 }
-
 function showQuestion(question) {
     questionEl.innerText = question.question
+   
 
 // Creates button for each answer choice.
     question.answers.forEach(answer => {
@@ -111,10 +101,12 @@ function showQuestion(question) {
         }
         button.addEventListener("click", selectAnswer)
         answerBtnEl.appendChild(button)
+        
     })
 }
 
 function resetState () {
+    clearStatusClass(document.body)
     while (answerBtnEl.firstChild) {
         answerBtnEl.removeChild
         (answerBtnEl.firstChild)
@@ -254,3 +246,25 @@ function checkSecond(sec) {
   if (sec < 0) {sec = "59"};
   return sec;
 } */
+/*
+var timeLeft = 60;
+    var elem = document.getElementById('timer');
+    
+    var timerId = setInterval(countdown, 1000);
+    
+    function countdown() {
+      if (timeLeft == -1) {
+        clearTimeout(timerId);
+        doSomething();
+      } else {
+        timer.innerHTML = timeLeft + ' seconds remaining';
+        timeLeft--;
+      }
+    }*/
+
+    
+    function selectedChoice() {
+        if (btn) {
+            
+        }
+    }
