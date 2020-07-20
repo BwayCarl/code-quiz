@@ -1,58 +1,3 @@
-
-
-/*
-
-
-// Timer
-
-const startTimer = 75; //75 second timer
-let timer = 75;
-
-function countdown() {
-    let 
-}
-
-var seconds = document.getElementById("timer").textContent;
-var countdown = setInterval(function() {
-    seconds--;
-    document.getElementById("timer").textContent = seconds;
-    if (seconds <= 0) clearInterval(countdown);
-}, 1000);
-
-//Check Answer
-
-function checkAnswer(answer) {
-    if (questions[runningQuestionIndex].correct == answer){
-        timer + 5;
-    } else {
-        timer -10;
-    }
-}
-
-
-
-// Countown Timer
-
-/*const startingMinutes = .1;
-let time = startingMinutes * 60;
-
-const countdownEl = document.getElementById("countdown")
-
-setInterval(updateCountdown, 1000);
-
-function updateCountdown() {
-const minutes = Math.floor(time / 60);
-let seconds = time % 60;
-
-seconds = seconds < 10 ? "0" + seconds : seconds;
-countdownEl.innerHTML = `${minutes}: ${seconds}`;
-    time--;
-    if (minutes == 0 && seconds == 0) {
-        return;
-    }
-}*/
-
-
 // Start Page Variables
 const startpageContainerEl = document.getElementById("startpage");
 const startBtn = document.getElementById("start-button");
@@ -65,6 +10,7 @@ let shuffledQuestions, currentQuestionIndex
 
 const questionEl = document.getElementById("question");
 const answerBtnEl = document.getElementById("choices");
+const finalScoreEl = document.getElementById("final")
 
 
 // Start Quiz
@@ -105,6 +51,7 @@ function showQuestion(question) {
     })
 }
 
+
 function resetState () {
     clearStatusClass(document.body)
     while (answerBtnEl.firstChild) {
@@ -123,6 +70,14 @@ function selectAnswer(e) {
     })
 }
 
+/*if (shuffledQuestions.length > currentQuestionIndex + 1) {
+    finalScoreEl.classList.remove("hide")
+    quizContainerEl.classList.add("hide")
+    startpageContainerEl.classList.add("hide")
+    timescoreContainerEl.classList.add("hide")
+
+}*/
+
 function setStatusClass(element, correct) {
     clearStatusClass(element)
 
@@ -137,6 +92,12 @@ function clearStatusClass(element) {
     element.classList.remove("correct")
     element.classList.remove("wrong")
 }
+
+//Next Question
+answerBtnEl.addEventListener("click", () => {
+    currentQuestionIndex++
+    setTimeout(setNextQuestion, 1500)()
+})
 // Quiz Questions
 
 const questions = [
@@ -264,7 +225,7 @@ var timeLeft = 60;
 
     
     function selectedChoice() {
-        if (btn) {
+        if (choice) {
             
         }
     }
