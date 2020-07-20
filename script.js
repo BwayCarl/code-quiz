@@ -96,7 +96,7 @@ function clearStatusClass(element) {
 //Next Question
 answerBtnEl.addEventListener("click", () => {
     currentQuestionIndex++
-    setTimeout(setNextQuestion, 1500)()
+    setTimeout(setNextQuestion, 1600)()
 })
 // Quiz Questions
 
@@ -224,8 +224,3 @@ var timeLeft = 60;
     }*/
 
     
-    function selectedChoice() {
-        if (choice) {
-            
-        }
-    }
