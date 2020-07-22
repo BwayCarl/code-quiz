@@ -2,83 +2,45 @@
     box-sizing: border-box;
     font-family: 'Noto Sans TC', sans-serif;
 }
-
-.header {
-    font-family: 'Ranchers', cursive;
-    font-size: 4rem;
-    padding: 2rem;
+html, body {
+    background-color: rgb(173, 220, 252);
+    margin: 1.25rem;
 }
 
-html {
-    margin: 4rem 2rem;
-}
-    
-body {
-    font-family: 'Noto Sans TC', sans-serif;
-    font-size: 1.5rem;
+.question-container {
     text-align: center;
-    padding-bottom: 2rem;
-    background-color: #add8e6;
-
 }
 
-#question {
-  font-size: 1.75rem;
-  padding-top: 2rem;
-  padding-bottom: 1rem;
-}
-  
-
-#start-button {
-    margin: 0 auto;
-    display: block;
-    padding: 1rem 2rem;
+.btn {
     border-radius: 2rem;
-    font-size: 1.5rem;
-}
+    padding: .75rem;
+    font-size: 1.5rem;;
 
-.btn-lg {
-    margin: 1rem 1rem;
-    padding: 1rem;
-    box-shadow: 0  0.25rem .5rem 0;
-    border-radius: 1.5rem;
-}
-.timescore-container p {
-  font-family: 'Ranchers', cursive;
-}
-
-#timer-box, #score-box {
-    border: 10px;
-    border-color: #000000;
-    padding: 2rem 2rem;
-    background-color: #d3d3d3;
-}
-
-.hide {
-    display: none;
 }
 
 .correct {
-    background-color: rgba(25, 219, 25, 0.76);
+    color: green;
+    font-size: 2rem;
 }
 
-.wrong {
-    background-color: rgba(180, 26, 26, 0.925);
+.wrong { 
+    color: red;
+    font-size: 2rem;
+}
 
+#highscore {
+    font-size: 1.25rem;
+}
+#time {
+    font-size: 1.5rem;
+}
+
+#title  {
+  font-family: 'Ranchers', cursive;
 }
 
 @media screen and (max-width: 768px) {
-
-    html, body {
-        margin: 1.25rem;
-        font-size: 1rem;
-    }
-
-    .header {
-        font-size: 2.5rem
-    }
-
-    #question {
-        font-size: 1.25rem;
+    .btn-secondary {
+        font-size: .75rem;
     }
 }

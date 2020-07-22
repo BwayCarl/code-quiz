@@ -1,226 +1,188 @@
-// Start Page Variables
-const startpageContainerEl = document.getElementById("startpage");
-const startBtn = document.getElementById("start-button");
-const quizContainerEl = document.getElementById("quiz");
-const timescoreContainerEl = document.getElementById("timescore");
-const timer = document.getElementById("timer");
+//Variables____________________
+let i = 0;
+let score = 0;
+let countdownTimer = 90;
+const timer = document.querySelector("#time");
+
+let messageDiv = document.querySelector("#message");
+var storedScores;
+var scoreList = [];
+const answerA = document.getElementById("answerA");
+const answerB = document.getElementById("answerB");
+const answerC = document.getElementById("answerC");
+const answerD = document.getElementById("answerD");
 
 
-let shuffledQuestions, currentQuestionIndex
 
-const questionEl = document.getElementById("question");
-const answerBtnEl = document.getElementById("choices");
-const finalScoreEl = document.getElementById("final")
+// Timer ________________________________________
 
+function setTime() {
+    let timerInterval = setInterval(function () {
+        countdownTimer--;
+        timer.textContent = "Time: " + countdownTimer;
 
-// Start Quiz
-startBtn.addEventListener("click", startQuiz);
-
-function startQuiz() {
-    startBtn.classList.add("hide")
-    shuffledQuestions = questions.sort(() => Math.random() - .5) //Shuffles questions each time the quiz is taken.
-    currentQuestionIndex = 0;
-    startpageContainerEl.classList.add("hide")
-    quizContainerEl.classList.remove("hide")
-    timescoreContainerEl.classList.remove("hide")
-    setNextQuestion()
-}
-
-// Load Questions
-function setNextQuestion() {
-    resetState()
-    showQuestion(shuffledQuestions[currentQuestionIndex])
-}
-function showQuestion(question) {
-    questionEl.innerText = question.question
-   
-
-// Creates button for each answer choice.
-    question.answers.forEach(answer => {
-        const button = document.createElement("button")
-        button.innerText = answer.text
-        button.classList.add("btn","btn-secondary", "btn-light", "btn-lg", "btn-block")
-
-        // Check Answer
-        if (answer.correct) {
-            button.dataset.correct = answer.correct
+        if (countdownTimer <= 0) {
+            clearInterval(timerInterval);
+            endQuiz();
+            messageDiv.hidden = true;
         }
-        button.addEventListener("click", selectAnswer)
-        answerBtnEl.appendChild(button)
-        
-    })
+
+        else if (i === questions.length) {
+            clearInterval(timerInterval);
+            messageDiv.hidden = true;
+        }
+    }, 1000)
+    return (score)
 }
 
+// Start Quiz --- loads the questions and choices, starts the timer, sets text content for "correct" or "wrong" response when choice is clicked.
 
-function resetState () {
-    clearStatusClass(document.body)
-    while (answerBtnEl.firstChild) {
-        answerBtnEl.removeChild
-        (answerBtnEl.firstChild)
+function loadQuestion() {
+    
+    answerA.hidden = false;
+    answerB.hidden = false;
+    answerC.hidden = false;
+    answerD.hidden = false;
+
+    document.getElementById("startBtn").hidden = true;
+    if (i === questions.length) {
+        endQuiz();
+    }
+    else {
+        document.getElementById("question").textContent = questions[i]["question"];
+        document.getElementById("answerA").textContent = questions[i]["choices"][0];
+        document.getElementById("answerB").textContent = questions[i]["choices"][1];
+        document.getElementById("answerC").textContent = questions[i]["choices"][2];
+        document.getElementById("answerD").textContent = questions[i]["choices"][3];
     }
 }
 
-function selectAnswer(e) {
-    const selectedButton = e.target
-    const correct = selectedButton.dataset.correct
+document.getElementById("startBtn").addEventListener("click", loadQuestion);
+document.getElementById("startBtn").addEventListener("click", setTime);
+document.getElementById("startBtn").addEventListener("click", function () {
+    messageDiv.textContent = "";
+});
 
-    setStatusClass(document.body, correct)
-    Array.from(answerBtnEl.children).forEach(button => {
-        setStatusClass(button, button.dataset.correct)
-    })
-}
+answerA.hidden = true;
+answerB.hidden = true;
+answerC.hidden = true;
+answerD.hidden = true;
 
-/*if (shuffledQuestions.length > currentQuestionIndex + 1) {
-    finalScoreEl.classList.remove("hide")
-    quizContainerEl.classList.add("hide")
-    startpageContainerEl.classList.add("hide")
-    timescoreContainerEl.classList.add("hide")
+// CHOICES - Compares choices array strings to the answer string. //
 
-}*/
+    // If Answer A is chosen.____________________________
 
-function setStatusClass(element, correct) {
-    clearStatusClass(element)
-
-    if (correct) {
-        element.classList.add("correct")
-    } else (
-        element.classList.add("wrong")
-    )
-}
-
-function clearStatusClass(element) {
-    element.classList.remove("correct")
-    element.classList.remove("wrong")
-}
-
-//Next Question
-answerBtnEl.addEventListener("click", () => {
-    currentQuestionIndex++
-    setTimeout(setNextQuestion, 1600)()
+document.getElementById("answerA").addEventListener("click", function () {
+    if (questions[i]["choices"][0] === questions[i]["answer"]) {
+        messageDiv.textContent = "Correct!";
+        messageDiv.classList.add("correct") // Attempting to make the "Correct!" message green - currently not working.
+        score++;
+        countdownTimer += 2;
+    }
+    else {
+        messageDiv.textContent = "Wrong!";
+        messageDiv.classList.add("wrong")// Attempting to make the "Wrong!" message red - currently not working.
+        countdownTimer -= 10;
+    }
+    i++;
+    loadQuestion();
+    messageDiv.classList.remove("correct")
+    messageDiv.classList.remove("wrong")
 })
-// Quiz Questions
 
-const questions = [
-    {   
-        question: "What does HTML stand for?",
-        answers: [
-         {text: "Hypertext Markup Language", correct: true},
-         {text: "Hyperlink Markup Language", correct: false},
-         {text: "How To Make Language", correct: false},
-         {text: "Hypertext Marking Language", correct: false}
-        ]},
+    // If Answer B is chosen.____________________________
 
-    {   question: "Besides 'var', what other two ways can you declare a variable?",
-        answers: [
-        {text: "'let' and 'for'", correct: false},
-        {text: "'if' and 'else'", correct: false},
-        {text: "'this' and 'const'", correct: false},
-        {text: "'let' and 'const'", correct: true},
-        ]},
+document.getElementById("answerB").addEventListener("click", function () {
+    if (questions[i]["choices"][1] === questions[i]["answer"]) {
+        messageDiv.textContent = "Correct!";
+        messageDiv.classList.add("correct");
+        score++;
+        countdownTimer += 2;
+    }
+    else {
+        messageDiv.textContent = "Wrong!";
+        messageDiv.classList.add("wrong");
+        countdownTimer -= 10;
+    }
+    i++;
+    loadQuestion();
+    messageDiv.classList.remove("correct")
+    messageDiv.classList.remove("wrong")
+})
 
-    {   question: "How do you style an HTML file?",
-        answers: [
-        {text: "jQuery ", correct: false},
-        {text: "Javascript", correct: false},
-        {text: "CSS", correct: true},
-        {text: "MongoDB", correct: false},
-        ]}, 
+    // If Answer C is chosen.____________________________
 
-    {   question: "What does CSS stand for?",
-        answers: [
-        {text: "Comment Styled Sheets", correct: false},
-        {text: "Cascading Style Sheets", correct: true},
-        {text: "Constructing Style Sheets", correct: false},
-        {text: "Case Styling Sheets", correct: false},
-        ]}, 
+document.getElementById("answerC").addEventListener("click", function () {
+    if (questions[i]["choices"][2] === questions[i]["answer"]) {
+        messageDiv.textContent = "Correct!";
+        messageDiv.classList.add("correct");
+        score++;
+        countdownTimer += 2;
+    }
+    else {
+        messageDiv.textContent = "Wrong!";
+        messageDiv.classList.add("wrong");
+        countdownTimer -= 10;
+    }
+    i++;
+    loadQuestion();
+    messageDiv.classList.remove("correct")
+    messageDiv.classList.remove("wrong")
+})
 
-    {   question: "What is the proper syntax for an array object?",
-    answers: [
-        {text: "var carMakes = (Toyota, BMW, Ford)", correct: false},
-        {text: "var carMakes = ['Toyota', 'BMW', 'Ford']", correct: true},
-        {text: "var carMakes = ['Toyota' 'BMW' 'Ford']", correct: false},
-        {text: "var carMakes = {'Toyota', 'BMW', 'Ford'}", correct: false},
-    ]},  
+    // If Answer D is chosen.____________________________
 
-    {   question: "What does the concat() Method do?",
-        answers: [
-        {text: "It is used to join two or more arrays.", correct: true},
-        {text: "It is used to store strings of characters.", correct: false},
-        {text: "It is used style buttons.", correct: false},
-        {text: "It is used to find felines with a criminal records.", correct: false},
-        ]},  
+document.getElementById("answerD").addEventListener("click", function () {
+    if (questions[i]["choices"][3] === questions[i]["answer"]) {
+        messageDiv.textContent = "Correct!";
+        messageDiv.classList.add("correct");
+        score++;
+        countdownTimer += 2;
+    }
+    else {
+        messageDiv.textContent = "Wrong!";
+        messageDiv.classList.add("wrong");
+        countdownTimer -= 10;
+    }
+    i++;
+    loadQuestion();
+    messageDiv.classList.remove("correct")
+    messageDiv.classList.remove("wrong")
+})
 
-    {   question: "What character is used to define/access jQuery?",
-        answers: [
-        {text: "#", correct: false},
-        {text: ".", correct: false},
-        {text: "$", correct: true},
-        {text: "&&", correct: false},
-        ]},   
+    // Quiz over due to time running out or answering all questions._______________
 
-    {   question: "What is Bootstrap?",
-        answers: [
-        {text: "It is a library of functions for use with JavaScript.", correct: false},
-        {text: "It is a CSS Framework for developing responsive and mobile-first websites.", correct: true},
-        {text: "It is a jQuery Framework that is a lightweight, 'write less, do more', JavaScript library.", correct: false},
-        {text: "A tool by which you pick yourself up, usually in pairs.", correct: false},
-        ]},
+function endQuiz() {
 
-    {   question: "What does a 'Responsive Web Design' mean?",
-        answers: [
-        {text: "Making sure your website is quick to access links and articles.", correct: false},
-        {text: "Creating voice commands to access parts of the webpage instad of using a mouse.", correct: false},
-        {text: "Adding animation to images and buttons.", correct: false},
-        {text: "Making a website look good on all devices (desktops, tablets, and phones).", correct: true},
-        ]},
+    var scoreTag = document.createElement("h1");
+    var inputTag = document.createElement("input");
+    var submitBtn = document.createElement("button");
+    score += countdownTimer -1;
+    score = score
+    document.getElementById("question").textContent = "Game Over";
+    answerA.remove();
+    answerB.remove();
+    answerC.remove();
+    answerD.remove();
 
-    {   question: "What is the proper syntax for a media query?",
-        answers: [
-        {text: "'?media' in the HTML file. ", correct: false},
-        {text: "'@media' in the CSS file.", correct: true},
-        {text: "'@media' in the JavaScript file.", correct: false},
-        {text: "'@mediaScreen' in the CSS file.", correct: false},
-        ]}
-]
-// Countdown Timer
-/*
-document.getElementById('timer').innerHTML =
-  002 + ":" + 00;
-startTimer();
-
-function startTimer() {
-  var presentTime = document.getElementById('timer').innerHTML;
-  var timeArray = presentTime.split(/[:]+/);
-  var m = timeArray[0];
-  var s = checkSecond((timeArray[1] - 1));
-  if(s==59){m=m-1}
-  //if(m<0){alert('timer completed')}
-  
-  document.getElementById('timer').innerHTML =
-    m + ":" + s;
-  console.log(m)
-  setTimeout(startTimer, 1000);
+    document.body.children[1].appendChild(scoreTag);
+    document.getElementsByTagName("h1")[0].setAttribute("id", "score");
+    document.getElementById("score").textContent = "Your Score: " + score;
+    document.body.children[1].appendChild(inputTag);
+   
+    document.getElementsByTagName("input")[0].setAttribute("id", "input-field");
+    submitBtn.textContent = "Submit";
+    document.body.children[1].appendChild(submitBtn);
+    
+    submitBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        var highScoreText = new Object();
+        highScoreText.name = inputTag.value.trim();
+        highScoreText.newScore = score;
+        storeScores(highScoreText);
+    });
 }
 
-function checkSecond(sec) {
-  if (sec < 10 && sec >= 0) {sec = "0" + sec}; // add zero in front of numbers < 10
-  if (sec < 0) {sec = "59"};
-  return sec;
-} */
-/*
-var timeLeft = 60;
-    var elem = document.getElementById('timer');
-    
-    var timerId = setInterval(countdown, 1000);
-    
-    function countdown() {
-      if (timeLeft == -1) {
-        clearTimeout(timerId);
-        doSomething();
-      } else {
-        timer.innerHTML = timeLeft + ' seconds remaining';
-        timeLeft--;
-      }
-    }*/
+// YET TO BUILD THIS PART OF THE ASSIGNMENT
 
-    
+// Scores: Stores high score in localStorage and presents them on the viewport.
